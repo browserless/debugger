@@ -1,0 +1,13 @@
+# Built Assets
+node_modules/
+static/
+
+# MAC
+.DS_Store
+
+# Temp files
+*.log
+
+# Caches
+.sass-cache
+_site

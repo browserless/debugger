@@ -1,0 +1,44 @@
+{
+  "name": "browserless-debugger",
+  "version": "1.0.0",
+  "description": "The web-client for browserless/chrome debugging",
+  "main": "static/index.js",
+  "files": [
+    "static/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-dev": "node ./node_modules/webpack/bin/webpack.js",
+    "build": "node ./node_modules/webpack/bin/webpack.js --optimization-minimize --mode production",
+    "dev": "npm run build-dev -- --watch"
+  },
+  "keywords": [
+    "browserless",
+    "debugger",
+    "puppeteer"
+  ],
+  "author": "joelgriffith",
+  "license": "GPL-3.0-or-later OR Browserless Commercial License",
+  "devDependencies": {
+    "@types/file-saver": "^2.0.1",
+    "copy-webpack-plugin": "^6.3.2",
+    "css-loader": "^4.3.0",
+    "file-loader": "^6.1.0",
+    "html-webpack-plugin": "^4.4.1",
+    "monaco-editor-webpack-plugin": "^2.0.0",
+    "raw-loader": "^4.0.2",
+    "style-loader": "^1.2.1",
+    "ts-loader": "^8.0.4",
+    "typescript": "^4.2.2",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "file-saver": "^2.0.5",
+    "file-type": "^16.2.0",
+    "jszip": "^3.6.0",
+    "monaco-editor": "^0.22.3",
+    "puppeteer": "^8.0.0"
+  }
+}
