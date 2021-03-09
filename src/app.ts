@@ -7,7 +7,7 @@ import { indexCode } from './constants';
 import { Settings } from './settings';
 import { Sessions } from './sessions';
 
-const packageJSON = require('puppeteer/package.json');
+const packageJSON = require('puppeteer-core/package.json');
 
 const README = `# Browserless Starter-pack
 This simple starter-pack gets you up and running with all the code you used in the debugger. Just install and run!

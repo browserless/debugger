@@ -39,6 +39,6 @@
     "file-type": "^16.2.0",
     "jszip": "^3.6.0",
     "monaco-editor": "^0.22.3",
-    "puppeteer": "^8.0.0"
+    "puppeteer-core": "^8.0.0"
   }
 }
