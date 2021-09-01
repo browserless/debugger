@@ -37,7 +37,7 @@
   "dependencies": {
     "file-saver": "^2.0.5",
     "file-type": "^16.2.0",
-    "jszip": "^3.6.0",
+    "jszip": "^3.7.1",
     "monaco-editor": "^0.22.3",
     "puppeteer-core": "^8.0.0"
   }
