@@ -1,9 +1,9 @@
 // Make sure WS transport is loaded and in webpack's cache
 import 'puppeteer-core/lib/esm/puppeteer/common/BrowserWebSocketTransport';
-import { Browser, Page, CDPSession } from 'puppeteer-core/lib/esm/puppeteer/api-docs-entry';
+import { Browser, Page, CDPSession, SerializableOrJSHandle } from 'puppeteer-core/lib/esm/puppeteer/api-docs-entry';
 import puppeteer from 'puppeteer-core/lib/esm/puppeteer/web';
 
-import { 
+import {
   ProtocolCommands,
   HostCommands,
   Message,
@@ -25,7 +25,9 @@ const sendParentMessage = (message: Message) => {
 // Since we're in a webworker this won't disable console messages in
 // the main app itself.
 Object.keys(self.console).forEach((consoleMethod: keyof Console) => {
-  self.console[consoleMethod] = (...args: any) => page && page.evaluate((consoleMethod: keyof Console, ...args) => {
+  // @ts-ignore
+  self.console[consoleMethod] = (...args: SerializableOrJSHandle[]) => page && page.evaluate((consoleMethod: keyof Console, ...args) => {
+    // @ts-ignore
     console[consoleMethod](...args);
   }, consoleMethod, ...args);
 });
