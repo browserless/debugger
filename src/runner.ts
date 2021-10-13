@@ -7,7 +7,7 @@ import {
   getDevtoolsAppURL,
 } from './api';
 
-import { 
+import {
   ProtocolCommands,
   HostCommands,
   Message,

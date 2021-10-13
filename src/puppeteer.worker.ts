@@ -1,6 +1,6 @@
 // Make sure WS transport is loaded and in webpack's cache
 import 'puppeteer-core/lib/esm/puppeteer/common/BrowserWebSocketTransport';
-import { Browser, Page, CDPSession, SerializableOrJSHandle } from 'puppeteer-core/lib/esm/puppeteer/api-docs-entry';
+import { Browser, Page, CDPSession } from 'puppeteer-core/lib/esm/puppeteer/api-docs-entry';
 import puppeteer from 'puppeteer-core/lib/esm/puppeteer/web';
 
 import {

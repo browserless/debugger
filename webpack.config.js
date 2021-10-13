@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 const srcDir = path.resolve(__dirname, 'src');
@@ -6,9 +7,6 @@ const outputDir = path.resolve(__dirname, 'static');
 
 const main = {
   mode: 'development',
-  node: {
-    fs: 'empty'
-  },
   devtool: 'source-map',
   entry: {
     app: path.join(srcDir, 'index.ts'),
@@ -49,21 +47,25 @@ const main = {
       title: 'browserless debugger',
       template: path.join(srcDir, 'index.html'),
     }),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
   ],
 };
 
 const worker = {
   target: 'webworker',
   mode: 'development',
-  node: {
-    fs: 'empty'
-  },
   devtool: 'source-map',
   entry: {
     'puppeteer.worker': path.join(srcDir, 'puppeteer.worker.ts'),
   },
   resolve: {
     extensions: ['.ts', '.js'],
+    fallback: {
+      fs: false,
+      path: false,
+    },
   },
   output: {
     globalObject: 'self',
@@ -79,6 +81,11 @@ const worker = {
       },
     ],
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
+  ],
 };
 
 module.exports = [main, worker];
