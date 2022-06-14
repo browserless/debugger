@@ -1,10 +1,8 @@
-import FileType from 'file-type/browser';
-
 import { debounce, once } from './util';
+
 import {
   getConnectURL,
   getQuality,
-  getDevtoolsAppURL,
 } from './api';
 
 import {
@@ -17,27 +15,11 @@ import {
 const runnerHTML = `
 <div id="viewer">
   <canvas id="screencast"></canvas>
-</div>
-<div id="resize-vertical" class="resizer-vertical"></div>
-<div id="devtools">
-  <iframe id="devtools-mount"></iframe>
 </div>`;
-
-const errorHTML = (error: string) => `<div class="fixed-message"><code style="color: red">${error.toString()}</code></div>`;
-
-interface RunnerParams {
-  code: string;
-  $mount: HTMLElement;
-  onClose: (...args: any[]) => void;
-}
 
 export class Runner {
   private puppeteerWorker: Worker;
-  private readonly code: RunnerParams['code'];
-  private readonly onClose: RunnerParams['onClose'];
-  private $mount: RunnerParams['$mount'];
-  private $verticalResizer: HTMLDivElement;
-  private $iframe: HTMLIFrameElement;
+  private $mount: HTMLElement;
   private $canvas: HTMLCanvasElement;
   private $viewer: HTMLElement;
   private ctx: CanvasRenderingContext2D;
@@ -49,54 +31,8 @@ export class Runner {
     return (event.altKey ? 1 : 0) | (event.ctrlKey ? 2 : 0) | (event.metaKey ? 4 : 0) | (event.shiftKey ? 8 : 0);
   }
 
-  static async makeDownload(response?: string | Uint8Array): Promise<{
-    type: string,
-    payload: any,
-  } | null> {
-    if (!response) {
-      return null;
-    }
-
-    if (response instanceof Uint8Array) {
-      const type = (await FileType.fromBuffer(response) || { mime: undefined }).mime;
-      if (!type) {
-        return null;
-      }
-      return { type, payload: response};
-    }
-
-    if (typeof response === 'string') {
-      return {
-        type: response.startsWith('<') ? 'text/html' : 'text/plain',
-        payload: response,
-      }
-    }
-
-    if (typeof response === 'object') {
-      return {
-        type: 'application/json',
-        payload: JSON.stringify(response, null, '  '),
-      };
-    }
-
-    return {
-      type: 'text/plain',
-      payload: response,
-    };
-  }
-
-  constructor ({
-    code,
-    $mount,
-    onClose,
-  }: {
-    code: string;
-    $mount: HTMLElement;
-    onClose: () => void;
-  }) {
-    this.$mount = $mount;
-    this.code = code;
-    this.onClose = onClose;
+  constructor () {
+    this.$mount = document.querySelector('#runner') as HTMLElement;
 
     this.setupPuppeteerWorker();
   }
@@ -112,8 +48,8 @@ export class Runner {
         return;
       }
 
-      this.$viewer.style.height = `${moveEvent.clientY - 71}px`;
-      this.$canvas.height = moveEvent.clientY - 71;
+      this.$viewer.style.height = `${moveEvent.clientY}px`;
+      this.$canvas.height = moveEvent.clientY;
     };
 
     let onMouseUp: any = () => {
@@ -250,8 +186,6 @@ export class Runner {
     this.$canvas.addEventListener('mouseenter', this.bindKeyEvents, false);
     this.$canvas.addEventListener('mouseleave', this.unbindKeyEvents, false);
 
-    this.$verticalResizer.addEventListener('mousedown', this.onVerticalResize);
-
     window.addEventListener('resize', this.resizePage);
   };
 
@@ -264,8 +198,6 @@ export class Runner {
 
     this.$canvas.removeEventListener('mouseenter', this.bindKeyEvents, false);
     this.$canvas.removeEventListener('mouseleave', this.unbindKeyEvents, false);
-
-    this.$verticalResizer.removeEventListener('mousedown', this.onVerticalResize);
 
     window.removeEventListener('resize', this.resizePage);
   };
@@ -286,61 +218,29 @@ export class Runner {
     });
   }, 500);
 
-  close = once((...args: any[]) => {
-    this.onClose(...args);
+  close = once(() => {
     this.sendWorkerMessage({ command: HostCommands.close, data: null });
     this.removeEventListeners();
     this.unbindKeyEvents();
   });
 
-  showError = (err: string) => {
-    this.$mount.innerHTML = `${errorHTML(err)}`;
-  };
-
-  onRunComplete = async ({ url, payload }: { url: string, payload: any }) => {
-    const download = await Runner.makeDownload(payload);
-
-    if (!download) {
-      return null;
-    }
-
-    const title = new URL(url).hostname.replace(/\W/g, '-');
-    const blob = new Blob([download.payload], { type: download.type });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-
-    const fileName = title;
-    link.download = fileName;
-    return link.click();
-  };
-
   sendWorkerMessage = (message: Message) => {
     this.puppeteerWorker.postMessage(message);
   };
 
-  onIframeLoad = () => {
-    this.$iframe.removeEventListener('load', this.onIframeLoad);
+  onWorkerSetupComplete = () => {
+    this.started = true;
+    this.$mount.innerHTML = runnerHTML;
+    this.$viewer = document.querySelector('#viewer') as HTMLDivElement;
+    this.$canvas = document.querySelector('#screencast') as HTMLCanvasElement;
+    this.ctx = this.$canvas.getContext('2d') as CanvasRenderingContext2D;
+
     this.sendWorkerMessage({
       command: HostCommands.run,
       data: {
-        code: this.code,
+        url: 'https://www.google.com/',
       },
     });
-  };
-
-  onWorkerSetupComplete = (payload: Message['data']) => {
-    const { targetId } = payload;
-    const iframeURL = getDevtoolsAppURL(targetId);
-
-    this.started = true;
-    this.$mount.innerHTML = runnerHTML;
-    this.$iframe = document.querySelector('#devtools-mount') as HTMLIFrameElement;
-    this.$viewer = document.querySelector('#viewer') as HTMLDivElement;
-    this.$canvas = document.querySelector('#screencast') as HTMLCanvasElement;
-    this.$verticalResizer = document.querySelector('#resize-vertical') as HTMLDivElement;
-    this.ctx = this.$canvas.getContext('2d') as CanvasRenderingContext2D;
-    this.$iframe.addEventListener('load', this.onIframeLoad);
-    this.$iframe.src = iframeURL;
 
     this.addListeners();
     this.resizePage();
@@ -352,7 +252,7 @@ export class Runner {
       const { command, data } = evt.data as Message;
 
       if (command === WorkerCommands.startComplete) {
-        return this.onWorkerSetupComplete(data);
+        return this.onWorkerSetupComplete();
       }
 
       if (command === WorkerCommands.screencastFrame) {
@@ -361,24 +261,16 @@ export class Runner {
 
       if (command === WorkerCommands.screencastFrame) {
         return this.onScreencastFrame(data)
-      }
-
-      if (command === WorkerCommands.runComplete) {
-        return this.onRunComplete(data);
-      }
-
-      if (command === WorkerCommands.error) {
-        return this.showError(data);
       }
 
       if (command === WorkerCommands.browserClose) {
-        return this.showError(`Session complete! Browser has closed.`);
+        return console.error(`browser has closed!`);
       }
     });
 
     this.puppeteerWorker.addEventListener('error', ({ message }) => {
       this.puppeteerWorker.terminate();
-      return this.showError(`Error communicating with puppeteer-worker ${message}`);
+      return console.error(`browser has errored: ${message}!`);
     });
 
     this.sendWorkerMessage({

@@ -77,8 +77,8 @@ const onScreencastFrame = ({ data, sessionId }: { data: string; sessionId: numbe
 
 const setViewport = (data: { width: number, height: number, deviceScaleFactor: number }) => page && page.setViewport(data);
 
-const runCode = async ({ code }: Message['data']) => {
-  eval(code)({ page })
+const runCode = async ({ url }: Message['data']) => {
+  page && page.goto(url)
     .then(async (res: any) => sendParentMessage({
       command: WorkerCommands.runComplete,
       data: {
