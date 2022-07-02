@@ -1,6 +1,6 @@
 {
   "name": "browserless-debugger",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The web-client for browserless/chrome debugging",
   "main": "static/index.js",
   "files": [
