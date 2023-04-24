@@ -6,16 +6,29 @@
   </head>
   <body>
     <header>
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="884.295 276.625 19.913 30.75" width="19.913pt" height="30.75pt">
-        <path d=" M 896.321 290.844 L 899.042 292.095 L 901.944 293.429 C 902.986 293.908 903.833 295.229 903.833 296.376 L 903.833 298.701 L 903.833 301.026 C 903.833 302.173 902.986 303.494 901.944 303.973 L 899.042 305.307 L 896.14 306.641 C 895.098 307.12 893.405 307.12 892.362 306.641 L 889.46 305.307 L 886.559 303.973 C 885.516 303.494 884.67 302.173 884.67 301.026 L 884.67 298.701 L 884.67 296.376 C 884.67 296.237 884.682 296.095 884.706 295.952 L 884.706 280.097 C 884.706 279.14 885.445 278.123 886.355 277.827 L 888.651 277.081 C 889.561 276.785 890.3 277.322 890.3 278.28 L 890.3 291.709 L 890.305 291.707 C 890.301 291.71 890.3 291.711 890.3 291.711 L 893.541 295.344 L 888.429 295.457 C 888.352 295.455 888.296 295.456 888.258 295.46 C 888.081 295.481 887.927 295.542 887.796 295.643 C 887.641 295.777 887.623 295.906 887.742 296.03 L 895.92 304.725 C 896.058 304.853 896.263 304.901 896.534 304.87 C 896.571 304.866 896.636 304.852 896.729 304.83 C 896.884 304.783 896.997 304.716 897.067 304.627 C 897.138 304.538 897.149 304.45 897.101 304.363 L 894.001 298.299 L 899.333 297.988 C 899.371 297.989 899.428 297.985 899.502 297.977 C 899.671 297.957 899.812 297.909 899.926 297.832 C 900.085 297.727 900.133 297.609 900.07 297.478 L 896.321 290.844 Z " fill-rule="evenodd" fill="none" stroke="#fff" vector-effect="non-scaling-stroke" stroke-width="1" stroke-dasharray="0,0" stroke-linejoin="round" stroke-linecap="butt" stroke-miterlimit="3" />
+      <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+        <defs>
+          <linearGradient id="g1" x1="6.9" y1="26.7" x2="23.8" y2="16.2" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#ff3c95" />
+            <stop offset="1" stop-color="#ffc550" />
+          </linearGradient>
+        </defs>
+        <style> .s0 { fill: url(#g1); } </style>
+        <path id="Path 0" class="s0" d="m7.6 0c0 0 0.8 0.5 3.6 2.1v12.8c0 12.3 0 12.9 0.1 12.9 0 0 2.2-1.1 9.5-4.7v-1.9c0-1.5 0-1.9-0.1-1.9 0 0-1.3 0.6-2.9 1.4-1.7 0.7-3 1.3-3 1.3 0 0 0-4 0-17.8l3.6 2.1v8.1l6 3.4v7.7l-6.6 3.2c-3.7 1.8-6.7 3.3-6.7 3.3-0.1 0-0.9-0.5-3.5-2.3v-9.3c0-5.1 0-11.7 0-14.8 0-3.1 0-5.6 0-5.6z" />
       </svg>
+
       <div class="group">
         <button id="download">
           <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
         </button>
-        <button id="run-button">►</button></header>
+        <button id="run-button">
+          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 -5 24 30" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg">
+            <path fill="none" stroke="#fff" stroke-width="2" d="M3,22.0000002 L21,12 L3,2 L3,22.0000002 Z M5,19 L17.5999998,11.9999999 L5,5 L5,19 Z M7,16 L14.1999999,12 L7,8 L7,16 Z M9,13 L10.8,12 L9,11 L9,13 Z"></path>
+          </svg>
+        </button></header>
       </div>
-    <main>
+
+      <main>
       <ul id="side-nav">
         <input value="editor" type="radio" name="open-panel" id="editor-button-radio" class="active" title="Code Editor" checked></input>
         <label for='editor-button-radio' id='editor-button'>
