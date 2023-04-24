@@ -3,9 +3,9 @@ export default async ({ page }: { page: Page }) => {
 
   // Full puppeteer API is available
   await page.goto('https://google.com/');
-  await page.type('input[type="text"]', 'browserless.io');
+  await page.type('textarea', 'browserless.io');
   await Promise.all([
-    page.click('input[type="submit"]'),
+    page.keyboard.press('Enter'),
     page.waitForNavigation(),
   ]);
 
@@ -13,12 +13,12 @@ export default async ({ page }: { page: Page }) => {
   console.log(\`I show up in the page's console!\`);
 
   const topLinks = await page.evaluate(() => {
-    const results = document.querySelectorAll('a');
+    const results = [...document.querySelectorAll('#search a')] as HTMLElement[];
     return [...results].map(el => [el.innerText, el.getAttribute('href')]);
   });
 
-  // Can pause by injecting a "debugger;" statement
-  await page.evaluate(() => { debugger; });
+  // Can pause by injecting a "debugger;" statement. Uncomment to see the magic
+  // await page.evaluate(() => { debugger; });
 
   console.table(topLinks);
 };`;
