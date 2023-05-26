@@ -60,7 +60,8 @@ const start = async (data: Message['data']) => {
     closeWorker();
   });
   page = await browser.newPage();
-  client = (page as any)._client as CDPSession;
+  page.pdf()
+  client = await page.target().createCDPSession();
 
   await client.send('Page.startScreencast', { format: 'jpeg', quality });
 
@@ -69,7 +70,7 @@ const start = async (data: Message['data']) => {
   sendParentMessage({
     command: WorkerCommands.startComplete,
     data: {
-      targetId: (page as any)._target._targetId,
+      targetId: page.target()._targetId,
     },
   });
 };
