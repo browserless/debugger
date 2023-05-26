@@ -10,8 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-dev": "node ./node_modules/webpack/bin/webpack.js",
     "build": "node ./node_modules/webpack/bin/webpack.js --optimization-minimize --mode production",
-    "dev": "npm run build-dev -- --watch",
-    "serve": "npm run build && http-server -a localhost ./static"
+    "dev": "npm run build -- --watch",
+    "serve": "npm run build-dev && http-server -a localhost ./static"
   },
   "keywords": [
     "browserless",
@@ -34,6 +34,7 @@
     "monaco-editor-webpack-plugin": "^5.0.0",
     "puppeteer-core": "^20.4.0",
     "raw-loader": "^4.0.2",
+    "stream-browserify": "^3.0.0",
     "style-loader": "^3.3.0",
     "ts-loader": "^9.2.6",
     "typescript": "^5.0.4",
