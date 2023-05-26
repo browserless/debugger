@@ -7,7 +7,6 @@ import {
   blankExample,
   searchExample,
 } from './constants';
-
 const nodeTypes = (require as any).context('!!raw-loader!@types/node/', true, /\.d.ts$/);
 const puppeteerTypes = require('!!raw-loader!puppeteer-core/lib/types.d.ts');
 
