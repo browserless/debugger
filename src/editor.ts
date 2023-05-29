@@ -28,7 +28,7 @@ export class Editor {
     tabName: 'Search',
     code: searchExample,
     active: true,
-  },{
+  }, {
     tabName: 'Scrape',
     code: scrapeExample,
     active: false,
@@ -124,7 +124,7 @@ export class Editor {
     tab.className = Editor.activeTabClass;
     tab.onblur = this.onAddTabComplete;
     tab.appendChild(closeButton);
-    
+
     tabs.forEach((t) => t.querySelector('.' + Editor.closeButtonSelector)?.removeAttribute('disabled'));
     this.clearActiveTabs();
     this.$tabs.prepend(tab);
@@ -202,13 +202,16 @@ export class Editor {
     nodeTypes.keys().forEach((key: string) => {
       monaco.languages.typescript.typescriptDefaults.addExtraLib(
         nodeTypes(key).default,
-        'node_modules/@types/node/' + key.substr(2)
+        'node_modules/@types/node/' + key.substring(2)
       );
     });
 
     monaco.languages.typescript.typescriptDefaults.addExtraLib(
       puppeteerTypes.default
         .replace('import { ChildProcess } from \'child_process\';', '')
+        .replace(`import { Protocol } from 'devtools-protocol';`, '')
+        .replace(`import { ProtocolMapping } from 'devtools-protocol/types/protocol-mapping.js';`, '')
+        .replace(`import type { Readable } from 'stream';`, '')
         .replace(/export /g, 'declare '),
       'node_modules/@types/puppeteer/index.d.ts',
     );
