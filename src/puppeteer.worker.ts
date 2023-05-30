@@ -3,8 +3,6 @@ import 'puppeteer-core/lib/esm/puppeteer/common/BrowserWebSocketTransport';
 import { Browser } from 'puppeteer-core/lib/esm/puppeteer/api/Browser';
 import { CDPSession } from 'puppeteer-core/lib/esm/puppeteer/common/Connection';
 import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page';
-
-
 import { Puppeteer } from 'puppeteer-core/lib/esm/puppeteer/common/Puppeteer';
 
 
