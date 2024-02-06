@@ -65,6 +65,7 @@ const worker = {
     fallback: {
       fs: false,
       path: false,
+      stream: false,
     },
   },
   output: {
@@ -79,6 +80,40 @@ const worker = {
         use: 'ts-loader',
         exclude: /node_modules/
       },
+      {
+        test: /Page\.js$/,
+        loader: 'string-replace-loader',
+        options: {
+          multiple: [
+            { 
+              search: 'return getReadableFromProtocolStream(__classPrivateFieldGet(this, _CDPPage_client, "f"), result.stream);',
+              replace: `return this.getPdfBuffer(__classPrivateFieldGet(this, _CDPPage_client, "f"), result.stream); 
+    }
+      
+    async getPdfBuffer(client, handle) {
+        let end = false;
+        const buffers = [];
+        while (!end){
+            const response = await client.send('IO.read', { handle });
+            buffers.push(Buffer.from(response.data, response.base64Encoded ? 'base64' : undefined));
+            if (response.eof) {
+                end = true;
+                await client.send('IO.close', { handle });
+            }
+        }
+        return Buffer.concat(buffers);`
+            },
+            { 
+              search: 'const readable = await this.createPDFStream(options);',
+              replace: 'const buffer = await this.createPDFStream(options);' 
+            },
+            {
+              search: 'const buffer = await getReadableAsBuffer(readable, path);',
+              replace: ''
+            }
+         ]
+        }
+      }
     ],
   },
   plugins: [

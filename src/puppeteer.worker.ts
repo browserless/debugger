@@ -1,7 +1,10 @@
 // Make sure WS transport is loaded and in webpack's cache
 import 'puppeteer-core/lib/esm/puppeteer/common/BrowserWebSocketTransport';
-import { Browser, Page, CDPSession } from 'puppeteer-core/lib/esm/puppeteer/api-docs-entry';
-import puppeteer from 'puppeteer-core/lib/esm/puppeteer/web';
+import { Browser } from 'puppeteer-core/lib/esm/puppeteer/api/Browser';
+import { CDPSession } from 'puppeteer-core/lib/esm/puppeteer/common/Connection';
+import { Page } from 'puppeteer-core/lib/esm/puppeteer/api/Page';
+import { Puppeteer } from 'puppeteer-core/lib/esm/puppeteer/common/Puppeteer';
+
 
 import {
   ProtocolCommands,
@@ -32,10 +35,11 @@ Object.keys(self.console).forEach((consoleMethod: keyof Console) => {
   }, consoleMethod, ...args);
 });
 
-const start = async(data: Message['data']) => {
+const start = async (data: Message['data']) => {
   const { browserWSEndpoint, quality = 100 } = data;
 
-  browser = await puppeteer.connect({ browserWSEndpoint })
+  const puppeter = new Puppeteer({ isPuppeteerCore: true });
+  browser = await puppeter.connect({ browserWSEndpoint })
     .catch((error) => {
       console.error(error);
       return undefined;
@@ -54,7 +58,8 @@ const start = async(data: Message['data']) => {
     closeWorker();
   });
   page = await browser.newPage();
-  client = (page as any)._client as CDPSession;
+  page.pdf()
+  client = await page.target().createCDPSession();
 
   await client.send('Page.startScreencast', { format: 'jpeg', quality });
 
@@ -63,14 +68,14 @@ const start = async(data: Message['data']) => {
   sendParentMessage({
     command: WorkerCommands.startComplete,
     data: {
-      targetId: (page as any)._target._targetId,
+      targetId: page.target()._targetId,
     },
   });
 };
 
 const onScreencastFrame = ({ data, sessionId }: { data: string; sessionId: number }) => {
   if (client) {
-    client.send('Page.screencastFrameAck', { sessionId }).catch(() => {});
+    client.send('Page.screencastFrameAck', { sessionId }).catch(() => { });
     sendParentMessage({ command: WorkerCommands.screencastFrame, data });
   }
 };
@@ -91,7 +96,7 @@ const runCode = async ({ code }: Message['data']) => {
     });
 };
 
-const closeWorker = async() => {
+const closeWorker = async () => {
   if (browser) browser.disconnect();
   return self.close();
 }
