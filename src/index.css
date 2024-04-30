@@ -3,6 +3,11 @@
    License: none (public domain)
 */
 
+:root {
+  --tar-700: #222222;
+  --charchoal-700: #454545;
+}
+
 * {
   font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
 }
@@ -97,30 +102,6 @@ code {
     transform: scale(0.95);
     box-shadow: 0 0 0 0 rgba(255, 156, 101, 0);
   }
-}
-
-#run-button {
-  text-align: center;
-  border-radius: 2.5em;
-  display: inline-block;
-  font-weight: 500;
-  font-size: 1.125rem;
-  text-decoration: none;
-  text-transform: uppercase;
-  background: linear-gradient(45deg, #ff3c95, #ffc550);
-  color: #fff;
-  transition: box-shadow 0.5s ease;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  width: 50px;
-  height: 50px;
-  transform: scale(1);
-  animation: pulse 2s infinite;
-}
-#run-button:hover,
-#run-button:focus {
-  box-shadow: 0 12px 45px rgba(255, 156, 101, 0.7);
 }
 
 header {
@@ -390,4 +371,141 @@ main {
 
 #editor-tabs::-webkit-scrollbar-corner {
   background: transparent;
+}
+
+/* WIP, these are styles to-be-merged */
+
+:root {
+  --tar-700: #222222;
+  --charchoal-700: #454545;
+}
+
+* {
+  font-family: monospace;
+}
+
+header,
+#editor-tabs,
+#side-nav {
+  background-color: var(--tar-700);
+  color: white;
+}
+
+#settings,
+#sessions {
+  border-radius: 0.375rem;
+  background-color: rgba(34, 34, 34, 0.8) !important;
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--charchoal-700);
+}
+
+#settings .form-input {
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 0.5em;
+}
+
+#settings input[type="text"],
+#settings input[type="url"],
+#settings input[type="number"],
+#settings textarea {
+  letter-spacing: normal;
+  margin: 0px 0px 24px;
+  box-sizing: border-box;
+  color: rgb(250, 250, 250);
+  font-feature-settings: normal;
+  font-size: 16px;
+  font-variation-settings: normal;
+  font-weight: 600;
+  line-height: 24px;
+  padding: 8px 16px;
+  width: 486px;
+  border-radius: 4px;
+  background-color: rgb(57, 57, 57);
+  outline: rgba(0, 0, 0, 0) solid 2px;
+  outline-offset: 2px;
+  color-scheme: dark;
+  overflow: visible;
+  border: 1px solid rgb(115, 115, 115);
+}
+
+#settings h2,
+#sessions h2 {
+  box-sizing: border-box;
+  margin: 0px;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  color: rgb(250, 250, 250);
+}
+
+#settings #close-settings {
+  left: calc(100% - 65px);
+}
+
+.form-input label {
+  box-sizing: border-box;
+  font-weight: 600;
+  color: rgb(250, 250, 250);
+  line-height: 24px;
+}
+
+#run-button {
+  color: rgb(255, 255, 255);
+  font-size: 14.875px;
+  text-decoration: none solid rgb(255, 255, 255);
+  background-color: rgb(245, 0, 122) !important;
+  outline: rgb(255, 255, 255) none 0px;
+  box-sizing: border-box;
+  border-radius: 4.25px;
+  cursor: pointer;
+  display: block;
+  line-height: 14.875px;
+  padding: 13.821px 29.75px;
+  box-shadow: inset 0 6px 16px rgba(255, 255, 255, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.05);
+  flex: 0 0 auto;
+  font-weight: 700;
+  text-align: center;
+  transition: all 0.13s ease 0s;
+  font-family: Urbanist, Arial, sans-serif;
+}
+
+div#code {
+  border-radius: 0.375rem !important;
+  padding: 12px;
+  background: rgb(34 34 34);
+  height: 92.6%;
+}
+
+#editor-tabs li {
+  background: rgb(34 34 34);
+  border-radius: 0.35em;
+}
+
+#editor-tabs li.active {
+  background: #454545;
+  border-bottom: unset !important;
+}
+
+#editor-tabs li .close-btn {
+  background: url(data:image/svg+xml;base64,PHN2ZyBzdHJva2U9IndoaXRlIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIwIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgaGVpZ2h0PSIxZW0iIHdpZHRoPSIxZW0iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTI4OS45NCAyNTYgOTUtOTVBMjQgMjQgMCAwIDAgMzUxIDEyN2wtOTUgOTUtOTUtOTVhMjQgMjQgMCAwIDAtMzQgMzRsOTUgOTUtOTUgOTVhMjQgMjQgMCAxIDAgMzQgMzRsOTUtOTUgOTUgOTVhMjQgMjQgMCAwIDAgMzQtMzR6Ij48L3BhdGg+PC9zdmc+)
+    50% no-repeat;
+}
+
+.monaco-editor, .monaco-editor-background, .monaco-editor .inputarea.ime-input,
+.monaco-editor .margin{
+    background: #171717;
+}
+
+.monaco-scrollable-element.editor-scrollable.vs-dark {
+  border-top-right-radius: 1em;
+  border-bottom-right-radius: 1em;  
+}
+
+.monaco-editor[role="code"] {
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 1em;
 }

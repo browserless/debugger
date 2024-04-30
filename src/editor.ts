@@ -214,17 +214,37 @@ export class Editor {
       'node_modules/@types/puppeteer/index.d.ts',
     );
 
+    monaco.editor.defineTheme('brwl', {
+      base: 'vs-dark',
+      inherit: true,
+      rules: [
+        {
+          token: "identifier",
+          foreground: "9CDCFE"
+        },
+        {
+          token: "identifier.function",
+          foreground: "DCDCAA"
+        },
+        {
+          token: "type",
+          foreground: "1AAFB0"
+        }
+      ],
+      colors: {}
+    });
+
     this.editor = monaco.editor.create($editor, {
       value: initialCode,
       language: 'typescript',
-      theme: 'vs-dark',
-      fontSize: 14,
+      theme: 'brwl',
+      fontSize: 16,
       wordWrap: 'on',
       scrollBeyondLastLine: false,
       automaticLayout: true,
       minimap: {
         enabled: false
-      }
+      },
     });
 
     this.editor.onDidChangeModelContent(this.saveState);

@@ -1,6 +1,7 @@
-import { get, set } from './storage';
+import { get, set } from "./storage";
+import { splitByWhitespace } from "./util";
 
-const apiSettingsKey = 'apiSettings'
+const apiSettingsKey = "apiSettings";
 interface APIState {
   baseURL: string;
   headless: boolean;
@@ -8,13 +9,14 @@ interface APIState {
   blockAds: boolean;
   ignoreHTTPSErrors: boolean;
   quality: number;
-};
+}
 
 const getState = () => get(apiSettingsKey) as APIState;
-const saveState = (newState: Partial<APIState>) => set(apiSettingsKey, {
-  ...getState(),
-  ...newState,
-});
+const saveState = (newState: Partial<APIState>) =>
+  set(apiSettingsKey, {
+    ...getState(),
+    ...newState,
+  });
 
 const priorSettings = getState() ?? {};
 
@@ -44,7 +46,8 @@ export const getAds = () => getState().blockAds;
 export const setAds = (blockAds: boolean) => saveState({ blockAds });
 
 export const getIgnoreHTTPS = () => getState().ignoreHTTPSErrors;
-export const setIgnoreHTTPS = (ignoreHTTPSErrors: boolean) => saveState({ ignoreHTTPSErrors });
+export const setIgnoreHTTPS = (ignoreHTTPSErrors: boolean) =>
+  saveState({ ignoreHTTPSErrors });
 
 export const getQuality = () => getState().quality;
 export const setQuality = (quality: number) => saveState({ quality });
@@ -57,15 +60,19 @@ export const getWebSocketURL = () => {
   return websocketURL;
 };
 
-const devtoolsInspectorURL = 'devtools/inspector.html';
-const devtoolsAppURL = 'devtools/devtools_app.html';
+const devtoolsInspectorURL = "devtools/inspector.html";
+const devtoolsAppURL = "devtools/devtools_app.html";
 
 const getHostedApp = (targetId: string, path: string) => {
   const baseUrl = getBaseURL();
-  const isSecure = baseUrl.protocol === ('https:');
-  const iframePageURL = `${isSecure ? 'wss' : 'ws'}=${baseUrl.host}${baseUrl.pathname}devtools/page/${targetId}${baseUrl.search}`;
-  
-  return `${baseUrl.origin}${baseUrl.pathname}${path}${baseUrl.search.length ? `${baseUrl.search}&` : '?'}${iframePageURL}`;
+  const isSecure = baseUrl.protocol === "https:";
+  const iframePageURL = `${isSecure ? "wss" : "ws"}=${baseUrl.host}${
+    baseUrl.pathname
+  }devtools/page/${targetId}${baseUrl.search}`;
+
+  return `${baseUrl.origin}${baseUrl.pathname}${path}${
+    baseUrl.search.length ? `${baseUrl.search}&` : "?"
+  }${iframePageURL}`;
 };
 
 export const getDevtoolsInspectorURL = (targetId: string) => {
@@ -78,38 +85,40 @@ export const getDevtoolsAppURL = (targetId: string) => {
 
 export const getBaseURL = () => {
   const { baseURL } = get(apiSettingsKey);
-  
+
   return new URL(baseURL);
 };
 
-export const setBrowserURL = (input: string): { valid: boolean, message: string } => {
-  let response = { valid: false, message: '' };
-  
-  if (!input.startsWith('ws')) {
+export const setBrowserURL = (
+  input: string,
+): { valid: boolean; message: string } => {
+  let response = { valid: false, message: "" };
+
+  if (!input.startsWith("ws")) {
     return {
       valid: false,
-      message: 'URL must start with ws:// or wss://'
+      message: "URL must start with ws:// or wss://",
     };
   }
-  
+
   try {
     new URL(input);
     response.valid = true;
-    response.message = '';
+    response.message = "";
   } catch {
     response.valid = false;
-    response.message = 'Invalid browser URL';
+    response.message = "Invalid browser URL";
   }
-  
-  if (!input.startsWith('ws')) {
+
+  if (!input.startsWith("ws")) {
     response.valid = false;
-    response.message = 'URL must start with ws:// or wss://';
+    response.message = "URL must start with ws:// or wss://";
   }
-  
+
   if (response.valid) {
     const parsed = new URL(input);
-    parsed.protocol = parsed.protocol === 'wss:' ? 'https:' : 'http:';
-    
+    parsed.protocol = parsed.protocol === "wss:" ? "https:" : "http:";
+
     saveState({ baseURL: parsed.href });
   }
 
@@ -123,21 +132,25 @@ export const getConnectURL = () => {
   const blockAds = getAds();
   const ignoreHTTPSErrors = getIgnoreHTTPS();
   const stealth = getStealth();
+
+  const launchArgs = JSON.stringify({
+    stealth,
+    args: splitByWhitespace((document.getElementById("chrome-flags") as any)?.value),
+  });
+
   if (blockAds) {
-    wsURL.searchParams.append('blockAds', 'true');
+    wsURL.searchParams.append("blockAds", "true");
   }
 
   if (!headless) {
-    wsURL.searchParams.append('headless', 'false');
+    wsURL.searchParams.append("headless", "false");
   }
 
   if (ignoreHTTPSErrors) {
-    wsURL.searchParams.append('ignoreHTTPSErrors', 'true');
+    wsURL.searchParams.append("ignoreHTTPSErrors", "true");
   }
 
-  if (stealth) {
-    wsURL.searchParams.append('stealth', 'true');
-  }
+  wsURL.searchParams.append("launch", launchArgs);
 
   return wsURL.href;
 };
@@ -146,13 +159,12 @@ export const fetchSessions = () => {
   const { baseURL } = get(apiSettingsKey);
 
   const sessionURL = new URL(baseURL);
-  sessionURL.pathname = sessionURL.pathname + 'sessions';
+  sessionURL.pathname = sessionURL.pathname + "sessions";
 
   return fetch(sessionURL.href, {
-    credentials: 'same-origin',
+    credentials: "same-origin",
     headers: {
-      'Accept': 'application/json',
-    }
-  })
-  .then(res => res.json());
-}
+      Accept: "application/json",
+    },
+  }).then((res) => res.json());
+};

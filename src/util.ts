@@ -7,13 +7,15 @@ export type Options = {
 
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+export const splitByWhitespace = (str: string) => str.split(/\s+/).filter(Boolean);
+
 export interface DebouncedFunction<F extends SideEffectFn> {
   (this: ThisParameterType<F>, ...args: Parameters<F>): void;
   cancel: () => void;
 }
 
 export const once = <A extends any[], R, T>(
-  fn: (this: T, ...arg: A) => R
+  fn: (this: T, ...arg: A) => R,
 ): ((this: T, ...arg: A) => R | undefined) => {
   let done = false;
   return function (this: T, ...args: A) {
@@ -24,7 +26,7 @@ export const once = <A extends any[], R, T>(
 export function debounce<F extends SideEffectFn>(
   func: F,
   waitMilliseconds = 50,
-  options: Options = {}
+  options: Options = {},
 ): DebouncedFunction<F> {
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
   const isImmediate = options.isImmediate ?? false;
@@ -49,7 +51,7 @@ export function debounce<F extends SideEffectFn>(
   ) {
     const context = this;
 
-    const invokeFunction = function invokeFunction () {
+    const invokeFunction = function invokeFunction() {
       timeoutId = undefined;
       lastInvokeTime = Date.now();
       if (!isImmediate) {
@@ -70,7 +72,7 @@ export function debounce<F extends SideEffectFn>(
     }
   };
 
-  debouncedFunction.cancel = function cancel () {
+  debouncedFunction.cancel = function cancel() {
     if (timeoutId !== undefined) {
       clearTimeout(timeoutId);
     }
