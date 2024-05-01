@@ -219,16 +219,29 @@ export class Editor {
       inherit: true,
       rules: [
         {
-          token: "identifier",
-          foreground: "9CDCFE"
+          token: "keyword",
+          foreground: "00aaff"
         },
         {
           token: "identifier.function",
-          foreground: "DCDCAA"
+          foreground: "dddddd"
         },
         {
           token: "type",
-          foreground: "1AAFB0"
+          foreground: "fceca7"
+        },
+        {
+          token: "string",
+          foreground: "ff9f64"
+        }
+        ,
+        {
+          token: "number",
+          foreground: "ff9f64"
+        },
+        {
+          token: "comment",
+          foreground: "7c7c7c"
         }
       ],
       colors: {}

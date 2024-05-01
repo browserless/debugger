@@ -24,8 +24,9 @@ const settingsHTML = `
     <input id="websocket-endpoint" type="url" />
   </div>
 
-  <div class="form-input" title="The quality of the video stream (100 is best, 0 is worst but less data.)">
+  <div class="form-input">
     <label for="screencast-quality">Quality</label>
+    <p class="form-descriptor">The quality of the video stream (100 is best, 0 is worst but less data.)</p>
     <input id="screencast-quality" type="number" min="0" max="100"/>
   </div>
 

@@ -161,7 +161,7 @@ main {
 #editor-tabs li.create {
   margin-left: auto;
   width: 30px;
-  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWZpbGUtcGx1cyI+PHBhdGggZD0iTTE0IDJINmEyIDIgMCAwIDAtMiAydjE2YTIgMiAwIDAgMCAyIDJoMTJhMiAyIDAgMCAwIDItMlY4eiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjE0IDIgMTQgOCAyMCA4Ij48L3BvbHlsaW5lPjxsaW5lIHgxPSIxMiIgeTE9IjE4IiB4Mj0iMTIiIHkyPSIxMiI+PC9saW5lPjxsaW5lIHgxPSI5IiB5MT0iMTUiIHgyPSIxNSIgeTI9IjE1Ij48L2xpbmU+PC9zdmc+) 50% 50% no-repeat;
+  background: url(data:image/svg+xml;base64,PHN2ZyBzdHJva2U9IndoaXRlIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIwIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiIgaGVpZ2h0PSIxZW0iIHdpZHRoPSIxZW0iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTI1NiA4MGMwLTE3LjctMTQuMy0zMi0zMi0zMnMtMzIgMTQuMy0zMiAzMlYyMjRINDhjLTE3LjcgMC0zMiAxNC4zLTMyIDMyczE0LjMgMzIgMzIgMzJIMTkyVjQzMmMwIDE3LjcgMTQuMyAzMiAzMiAzMnMzMi0xNC4zIDMyLTMyVjI4OEg0MDBjMTcuNyAwIDMyLTE0LjMgMzItMzJzLTE0LjMtMzItMzItMzJIMjU2VjgweiI+PC9wYXRoPjwvc3ZnPg==) 50% 50% no-repeat;
 }
 
 #editor-tabs li.active {
@@ -215,10 +215,6 @@ main {
   border-bottom: 1px solid #333;
   color: white;
   height: 20px;
-}
-
-#side-nav input[type="radio"]:checked + label {
-  border-bottom: 1px solid #007bff;
 }
 
 #side-nav input[type="radio"]:hover {
@@ -301,7 +297,6 @@ main {
 #settings .form-input {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
   align-items: center;
 }
 
@@ -356,6 +351,7 @@ main {
 
 #editor-tabs {
   padding-top: 5px;
+  margin-left: 1em;
 }
 
 #editor-tabs::-webkit-scrollbar {
@@ -373,7 +369,7 @@ main {
   background: transparent;
 }
 
-/* WIP, these are styles to-be-merged */
+/* V2 styles */
 
 :root {
   --tar-700: #222222;
@@ -381,7 +377,17 @@ main {
 }
 
 * {
-  font-family: monospace;
+  font-family: "Fira Code", monospace;
+}
+
+header .logo {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  font-size: 14pt;
+  color: #a3a3a3;
+  font-family: "Fira Code", monospace !important;
+  cursor: default !important;
 }
 
 header,
@@ -433,9 +439,8 @@ header,
 #settings h2,
 #sessions h2 {
   box-sizing: border-box;
-  margin: 0px;
+  margin-bottom: 1em;
   font-size: 24px;
-  line-height: 32px;
   font-weight: 600;
   color: rgb(250, 250, 250);
 }
@@ -495,17 +500,87 @@ div#code {
     50% no-repeat;
 }
 
-.monaco-editor, .monaco-editor-background, .monaco-editor .inputarea.ime-input,
-.monaco-editor .margin{
-    background: #171717;
-}
-
-.monaco-scrollable-element.editor-scrollable.vs-dark {
-  border-top-right-radius: 1em;
-  border-bottom-right-radius: 1em;  
-}
-
 .monaco-editor[role="code"] {
-    border-top-left-radius: 1em;
-    border-bottom-left-radius: 1em;
+  padding-top: 1em;
+}
+
+.monaco-editor,
+.monaco-editor-background,
+.monaco-editor .inputarea.ime-input,
+.monaco-editor .margin {
+  background: #171717 !important;
+}
+
+.monaco-editor[role="code"],
+.monaco-scrollable-element.editor-scrollable.vs-dark {
+  border-top-right-radius: 1em !important;
+  border-bottom-right-radius: 1em !important;
+}
+
+.monaco-editor[role="code"],
+.monaco-editor .overflow-guard > div.margin[role="presentation"] {
+  border-top-left-radius: 1em !important;
+  border-bottom-left-radius: 1em !important;
+}
+
+.fixed-message {
+  width: 95%;
+  height: 95%;
+  border-radius: 1em;
+  margin-left: 1em;
+  margin-top: 2em;
+}
+
+.resizer-horizontal {
+  width: 2px;
+  background: transparent !important;
+}
+
+.resizer-horizontal:hover {
+  background: #555 !important;
+}
+
+div#editor {
+  max-height: 90vh;
+}
+
+body {
+  background: var(--tar-700);
+}
+
+canvas#screencast {
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+
+  width: 95%;
+  height: 95%;
+  margin-left: 1em;
+  margin-top: 2em;
+}
+
+#devtools iframe {
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+
+  width: 95%;
+  height: 95%;
+  margin-left: 1em;
+}
+
+#side-nav input[type="radio"]:hover + label,
+#side-nav input[type="radio"]:checked + label {
+  background: #454545;
+}
+
+#side-nav input[type="radio"] + label {
+  border-radius: 0.35em;
+  margin-left: 0.35em;
+}
+
+div.form-input p.form-descriptor {
+  box-sizing: border-box;
+  color: #9b9b9b;
+  line-height: 1em;
+  font-size: 10pt;
+  cursor: default;
 }

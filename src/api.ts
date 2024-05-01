@@ -20,7 +20,12 @@ const saveState = (newState: Partial<APIState>) =>
 
 const priorSettings = getState() ?? {};
 
-const baseURL = priorSettings.baseURL ?? window.location.href;
+const token = new URL(window.location.href).searchParams.get("token");
+
+const baseURL =
+  priorSettings.baseURL ?? token
+    ? `${window.location.origin}?token=${token}`
+    : window.location.origin;
 const headless = priorSettings.headless ?? true;
 const stealth = priorSettings.stealth ?? false;
 const blockAds = priorSettings.blockAds ?? false;
@@ -55,7 +60,7 @@ export const setQuality = (quality: number) => saveState({ quality });
 export const getWebSocketURL = () => {
   const baseURL = getBaseURL();
   const websocketURL = new URL(baseURL.href);
-  websocketURL.protocol = websocketURL.protocol === 'https:' ? 'wss:' : 'ws:';
+  websocketURL.protocol = websocketURL.protocol === "https:" ? "wss:" : "ws:";
 
   return websocketURL;
 };
