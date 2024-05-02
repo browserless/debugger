@@ -44,7 +44,8 @@ const main = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      title: 'browserless debugger',
+      title: 'Browserless debugger',
+      favicon: path.join(srcDir, 'favicon.ico'),
       template: path.join(srcDir, 'index.html'),
     }),
     new webpack.ProvidePlugin({

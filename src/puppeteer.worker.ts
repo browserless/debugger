@@ -42,6 +42,7 @@ const start = async(data: Message['data']) => {
     });
 
   if (!browser) {
+    
     sendParentMessage({
       command: WorkerCommands.error,
       data: `⚠️ Couldn't establish a connection "${browserWSEndpoint}". Is your browser running?`,

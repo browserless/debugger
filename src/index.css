@@ -3,6 +3,11 @@
    License: none (public domain)
 */
 
+:root {
+  --tar-700: #222222;
+  --charchoal-700: #454545;
+}
+
 * {
   font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
 }
@@ -99,30 +104,6 @@ code {
   }
 }
 
-#run-button {
-  text-align: center;
-  border-radius: 2.5em;
-  display: inline-block;
-  font-weight: 500;
-  font-size: 1.125rem;
-  text-decoration: none;
-  text-transform: uppercase;
-  background: linear-gradient(45deg, #ff3c95, #ffc550);
-  color: #fff;
-  transition: box-shadow 0.5s ease;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  width: 50px;
-  height: 50px;
-  transform: scale(1);
-  animation: pulse 2s infinite;
-}
-#run-button:hover,
-#run-button:focus {
-  box-shadow: 0 12px 45px rgba(255, 156, 101, 0.7);
-}
-
 header {
   height: 50px;
   padding: 10px 30px;
@@ -180,7 +161,7 @@ main {
 #editor-tabs li.create {
   margin-left: auto;
   width: 30px;
-  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWZpbGUtcGx1cyI+PHBhdGggZD0iTTE0IDJINmEyIDIgMCAwIDAtMiAydjE2YTIgMiAwIDAgMCAyIDJoMTJhMiAyIDAgMCAwIDItMlY4eiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjE0IDIgMTQgOCAyMCA4Ij48L3BvbHlsaW5lPjxsaW5lIHgxPSIxMiIgeTE9IjE4IiB4Mj0iMTIiIHkyPSIxMiI+PC9saW5lPjxsaW5lIHgxPSI5IiB5MT0iMTUiIHgyPSIxNSIgeTI9IjE1Ij48L2xpbmU+PC9zdmc+) 50% 50% no-repeat;
+  background: url(data:image/svg+xml;base64,PHN2ZyBzdHJva2U9IndoaXRlIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIwIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiIgaGVpZ2h0PSIxZW0iIHdpZHRoPSIxZW0iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTI1NiA4MGMwLTE3LjctMTQuMy0zMi0zMi0zMnMtMzIgMTQuMy0zMiAzMlYyMjRINDhjLTE3LjcgMC0zMiAxNC4zLTMyIDMyczE0LjMgMzIgMzIgMzJIMTkyVjQzMmMwIDE3LjcgMTQuMyAzMiAzMiAzMnMzMi0xNC4zIDMyLTMyVjI4OEg0MDBjMTcuNyAwIDMyLTE0LjMgMzItMzJzLTE0LjMtMzItMzItMzJIMjU2VjgweiI+PC9wYXRoPjwvc3ZnPg==) 50% 50% no-repeat;
 }
 
 #editor-tabs li.active {
@@ -234,10 +215,6 @@ main {
   border-bottom: 1px solid #333;
   color: white;
   height: 20px;
-}
-
-#side-nav input[type="radio"]:checked + label {
-  border-bottom: 1px solid #007bff;
 }
 
 #side-nav input[type="radio"]:hover {
@@ -320,7 +297,6 @@ main {
 #settings .form-input {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
   align-items: center;
 }
 
@@ -375,6 +351,7 @@ main {
 
 #editor-tabs {
   padding-top: 5px;
+  margin-left: 1em;
 }
 
 #editor-tabs::-webkit-scrollbar {
@@ -390,4 +367,220 @@ main {
 
 #editor-tabs::-webkit-scrollbar-corner {
   background: transparent;
+}
+
+/* V2 styles */
+
+:root {
+  --tar-700: #222222;
+  --charchoal-700: #454545;
+}
+
+* {
+  font-family: "Fira Code", monospace;
+}
+
+header .logo {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  font-size: 14pt;
+  color: #a3a3a3;
+  font-family: "Fira Code", monospace !important;
+  cursor: default !important;
+}
+
+header,
+#editor-tabs,
+#side-nav {
+  background-color: var(--tar-700);
+  color: white;
+}
+
+#settings,
+#sessions {
+  border-radius: 0.375rem;
+  background-color: rgba(34, 34, 34, 0.8) !important;
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--charchoal-700);
+}
+
+#settings .form-input {
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 0.5em;
+}
+
+#settings input[type="text"],
+#settings input[type="url"],
+#settings input[type="number"],
+#settings textarea {
+  letter-spacing: normal;
+  margin: 0px 0px 24px;
+  box-sizing: border-box;
+  color: rgb(250, 250, 250);
+  font-feature-settings: normal;
+  font-size: 16px;
+  font-variation-settings: normal;
+  font-weight: 600;
+  line-height: 24px;
+  padding: 8px 16px;
+  width: 486px;
+  border-radius: 4px;
+  background-color: rgb(57, 57, 57);
+  outline: rgba(0, 0, 0, 0) solid 2px;
+  outline-offset: 2px;
+  color-scheme: dark;
+  overflow: visible;
+  border: 1px solid rgb(115, 115, 115);
+}
+
+#settings h2,
+#sessions h2 {
+  box-sizing: border-box;
+  margin-bottom: 1em;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(250, 250, 250);
+}
+
+#settings #close-settings {
+  left: calc(100% - 65px);
+}
+
+.form-input label {
+  box-sizing: border-box;
+  font-weight: 600;
+  color: rgb(250, 250, 250);
+  line-height: 24px;
+}
+
+#run-button {
+  color: rgb(255, 255, 255);
+  font-size: 14.875px;
+  text-decoration: none solid rgb(255, 255, 255);
+  background-color: rgb(245, 0, 122) !important;
+  outline: rgb(255, 255, 255) none 0px;
+  box-sizing: border-box;
+  border-radius: 4.25px;
+  cursor: pointer;
+  display: block;
+  line-height: 14.875px;
+  padding: 13.821px 29.75px;
+  box-shadow: inset 0 6px 16px rgba(255, 255, 255, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.05);
+  flex: 0 0 auto;
+  font-weight: 700;
+  text-align: center;
+  transition: all 0.13s ease 0s;
+  font-family: Urbanist, Arial, sans-serif;
+}
+
+div#code {
+  border-radius: 0.375rem !important;
+  padding: 12px;
+  background: rgb(34 34 34);
+  height: 92.6%;
+}
+
+#editor-tabs li {
+  background: rgb(34 34 34);
+  border-radius: 0.35em;
+}
+
+#editor-tabs li.active {
+  background: #454545;
+  border-bottom: unset !important;
+}
+
+#editor-tabs li .close-btn {
+  background: url(data:image/svg+xml;base64,PHN2ZyBzdHJva2U9IndoaXRlIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIwIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgaGVpZ2h0PSIxZW0iIHdpZHRoPSIxZW0iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTI4OS45NCAyNTYgOTUtOTVBMjQgMjQgMCAwIDAgMzUxIDEyN2wtOTUgOTUtOTUtOTVhMjQgMjQgMCAwIDAtMzQgMzRsOTUgOTUtOTUgOTVhMjQgMjQgMCAxIDAgMzQgMzRsOTUtOTUgOTUgOTVhMjQgMjQgMCAwIDAgMzQtMzR6Ij48L3BhdGg+PC9zdmc+)
+    50% no-repeat;
+}
+
+.monaco-editor[role="code"] {
+  padding-top: 1em;
+}
+
+.monaco-editor,
+.monaco-editor-background,
+.monaco-editor .inputarea.ime-input,
+.monaco-editor .margin {
+  background: #171717 !important;
+}
+
+.monaco-editor[role="code"],
+.monaco-scrollable-element.editor-scrollable.vs-dark {
+  border-top-right-radius: 1em !important;
+  border-bottom-right-radius: 1em !important;
+}
+
+.monaco-editor[role="code"],
+.monaco-editor .overflow-guard > div.margin[role="presentation"] {
+  border-top-left-radius: 1em !important;
+  border-bottom-left-radius: 1em !important;
+}
+
+.fixed-message {
+  width: 95%;
+  height: 95%;
+  border-radius: 1em;
+  margin-left: 1em;
+  margin-top: 2em;
+}
+
+.resizer-horizontal {
+  width: 2px;
+  background: transparent !important;
+}
+
+.resizer-horizontal:hover {
+  background: #555 !important;
+}
+
+div#editor {
+  max-height: 90vh;
+}
+
+body {
+  background: var(--tar-700);
+}
+
+canvas#screencast {
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+
+  width: 95%;
+  height: 95%;
+  margin-left: 1em;
+  margin-top: 2em;
+}
+
+#devtools iframe {
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+
+  width: 95%;
+  height: 95%;
+  margin-left: 1em;
+}
+
+#side-nav input[type="radio"]:hover + label,
+#side-nav input[type="radio"]:checked + label {
+  background: #454545;
+}
+
+#side-nav input[type="radio"] + label {
+  border-radius: 0.35em;
+  margin-left: 0.35em;
+}
+
+div.form-input p.form-descriptor {
+  box-sizing: border-box;
+  color: #9b9b9b;
+  line-height: 1em;
+  font-size: 10pt;
+  cursor: default;
 }
