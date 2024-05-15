@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-dev": "node ./node_modules/webpack/bin/webpack.js",
-    "build": "node ./node_modules/webpack/bin/webpack.js --optimization-minimize --mode production",
+    "build": "node ./node_modules/webpack/bin/webpack.js --optimization-minimize --mode production && npm run copy-telemetry",
+    "copy-telemetry": "cpy tracker.js ./static/",
     "dev": "npm run build-dev -- --watch",
     "serve": "npm run build && http-server -a localhost ./static"
   },
@@ -24,6 +25,7 @@
     "@types/file-saver": "^2.0.3",
     "buffer": "^6.0.3",
     "copy-webpack-plugin": "^9.0.1",
+    "cpy-cli": "^5.0.0",
     "css-loader": "^6.4.0",
     "file-loader": "^6.1.0",
     "file-saver": "^2.0.5",
