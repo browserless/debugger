@@ -13,7 +13,7 @@ const loadGtagManager = () => {
 
 if (
   window.location.protocol === "https:" &&
-  location.host === "chrome.browserless.io"
+  window.location.host === "chrome.browserless.io"
 ) {
   loadPostHog();
   loadGTag();
