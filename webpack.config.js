@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 const srcDir = path.resolve(__dirname, 'src');
 const outputDir = path.resolve(__dirname, 'static');
@@ -12,6 +13,7 @@ const main = {
     app: path.join(srcDir, 'index.ts'),
     'editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js',
     'ts.worker': 'monaco-editor/esm/vs/language/typescript/ts.worker',
+    router: path.join(srcDir, 'router.ts'),
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -51,6 +53,9 @@ const main = {
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
     }),
+    new CopyPlugin({
+      patterns: ['tracker.js'],  
+    })
   ],
 };
 

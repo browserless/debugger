@@ -23,7 +23,7 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.3",
     "buffer": "^6.0.3",
-    "copy-webpack-plugin": "^9.0.1",
+    "copy-webpack-plugin": "^9.1.0",
     "css-loader": "^6.4.0",
     "file-loader": "^6.1.0",
     "file-saver": "^2.0.5",
