@@ -139,6 +139,7 @@ export const getConnectURL = () => {
   const stealth = getStealth();
 
   const launchArgs = JSON.stringify({
+    ignoreHTTPSErrors,
     stealth,
     args: splitByWhitespace((document.getElementById("chrome-flags") as any)?.value),
   });
@@ -151,12 +152,7 @@ export const getConnectURL = () => {
     wsURL.searchParams.append("headless", "false");
   }
 
-  if (ignoreHTTPSErrors) {
-    wsURL.searchParams.append("ignoreHTTPSErrors", "true");
-  }
-
   wsURL.searchParams.append("launch", launchArgs);
-
   return wsURL.href;
 };
 
