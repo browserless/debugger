@@ -23,7 +23,8 @@ const loadAmplitude = async () => {
 }
 
 if (
-true
+  window.location.protocol === "https:" &&
+  window.location.host === "chrome.browserless.io"
 ) {
   loadPostHog();
   loadGTag();
