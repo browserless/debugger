@@ -18,7 +18,7 @@ const loadAmplitude = async () => {
     defaultTracking: { pageViews: false, formInteractions: false }
   };
 
-  await amplitude.init("17d2e3b25ee6a65ded4e65f03425f39d", opts);
+  await amplitude.init("4a0e558f758d811ba8d4d3595f1b8e73", opts);
   window.amplitude && await window.amplitude.track("Debugger Page Visited");
 }
 
