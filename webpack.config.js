@@ -13,7 +13,6 @@ const main = {
     app: path.join(srcDir, 'index.ts'),
     'editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js',
     'ts.worker': 'monaco-editor/esm/vs/language/typescript/ts.worker',
-    router: path.join(srcDir, 'router.ts'),
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -55,6 +54,9 @@ const main = {
     }),
     new CopyPlugin({
       patterns: ['tracker.js'],  
+    }),
+    new CopyPlugin({
+      patterns: ['router.js'],  
     })
   ],
 };
