@@ -125,7 +125,7 @@ export class Editor {
     tab.className = Editor.activeTabClass;
     tab.onblur = this.onAddTabComplete;
     tab.appendChild(closeButton);
-    
+
     tabs.forEach((t) => t.querySelector('.' + Editor.closeButtonSelector)?.removeAttribute('disabled'));
     this.clearActiveTabs();
     this.$tabs.prepend(tab);
@@ -209,7 +209,7 @@ export class Editor {
 
     monaco.languages.typescript.typescriptDefaults.addExtraLib(
       puppeteerTypes.default
-        .replace('import { ChildProcess } from \'child_process\';', '')
+        .replace(/import.*/gi, '')
         .replace(/export /g, 'declare '),
       'node_modules/@types/puppeteer/index.d.ts',
     );
