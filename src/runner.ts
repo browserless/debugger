@@ -359,10 +359,6 @@ export class Runner {
         return this.onScreencastFrame(data)
       }
 
-      if (command === WorkerCommands.screencastFrame) {
-        return this.onScreencastFrame(data)
-      }
-
       if (command === WorkerCommands.runComplete) {
         return this.onRunComplete(data);
       }
