@@ -22,10 +22,7 @@ const priorSettings = getState() ?? {};
 
 const token = new URL(window.location.href).searchParams.get("token");
 
-const baseURL =
-  priorSettings.baseURL ?? token
-    ? `${window.location.origin}?token=${token}`
-    : window.location.origin;
+const baseURL = priorSettings.baseURL ?? `${window.location.origin}?token=${token}`;
 const headless = priorSettings.headless ?? true;
 const stealth = priorSettings.stealth ?? false;
 const blockAds = priorSettings.blockAds ?? false;

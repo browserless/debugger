@@ -225,6 +225,9 @@ export class Runner {
   };
 
   onScreencastFrame = (data: string) => {
+    if (!this.ctx) {
+      return;
+    }
     this.img.onload = () => this.ctx.drawImage(this.img, 0, 0, this.$canvas.width, this.$canvas.height);
     this.img.src = 'data:image/png;base64,' + data;
   };
