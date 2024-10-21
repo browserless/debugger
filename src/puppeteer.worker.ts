@@ -1,7 +1,5 @@
-// Make sure WS transport is loaded and in webpack's cache
-import 'puppeteer-core/lib/esm/puppeteer/common/BrowserWebSocketTransport';
-import { Browser, Page, CDPSession } from 'puppeteer-core/lib/esm/puppeteer/api-docs-entry';
-import puppeteer from 'puppeteer-core/lib/esm/puppeteer/web';
+import { connect } from 'puppeteer-core/lib/esm/puppeteer/puppeteer-core-browser.js';
+import { Page, CDPSession } from 'puppeteer-core';
 
 import {
   ProtocolCommands,
@@ -10,14 +8,15 @@ import {
   WorkerCommands,
 } from './types';
 
+type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
+
 const protocolCommands = Object.keys(ProtocolCommands);
 
-let browser: Browser | void;
+let browser: UnwrapPromise<ReturnType<typeof connect>> | undefined;
 let page: Page | void;
 let client: CDPSession | void;
 
 const sendParentMessage = (message: Message) => {
-  // @ts-ignore
   self.postMessage(message);
 };
 
@@ -35,14 +34,13 @@ Object.keys(self.console).forEach((consoleMethod: keyof Console) => {
 const start = async(data: Message['data']) => {
   const { browserWSEndpoint, quality = 100 } = data;
 
-  browser = await puppeteer.connect({ browserWSEndpoint })
+  browser = await connect({ browserWSEndpoint })
     .catch((error) => {
       console.error(error);
       return undefined;
     });
 
   if (!browser) {
-    
     sendParentMessage({
       command: WorkerCommands.error,
       data: `⚠️ Couldn't establish a connection "${browserWSEndpoint}". Is your browser running?`,
@@ -54,8 +52,8 @@ const start = async(data: Message['data']) => {
     sendParentMessage({ command: WorkerCommands.browserClose, data: null });
     closeWorker();
   });
-  page = await browser.newPage();
-  client = (page as any)._client as CDPSession;
+  page = await browser.newPage() as unknown as Page;
+  client = await page.createCDPSession();
 
   await client.send('Page.startScreencast', { format: 'jpeg', quality });
 
@@ -64,7 +62,7 @@ const start = async(data: Message['data']) => {
   sendParentMessage({
     command: WorkerCommands.startComplete,
     data: {
-      targetId: (page as any)._target._targetId,
+      targetId: (page as any).target()._targetId,
     },
   });
 };
