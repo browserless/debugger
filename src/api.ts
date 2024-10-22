@@ -21,8 +21,13 @@ const saveState = (newState: Partial<APIState>) =>
 const priorSettings = getState() ?? {};
 
 const token = new URL(window.location.href).searchParams.get("token");
+const defaultURL = new URL(window.location.origin);
 
-const baseURL = priorSettings.baseURL ?? `${window.location.origin}?token=${token}`;
+if (token) {
+  defaultURL.searchParams.set('token', token);
+}
+
+const baseURL = priorSettings.baseURL ?? defaultURL.href;
 const headless = priorSettings.headless ?? true;
 const stealth = priorSettings.stealth ?? false;
 const blockAds = priorSettings.blockAds ?? false;
